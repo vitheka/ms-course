@@ -2,6 +2,7 @@ package com.vitor.course.mapper;
 
 import com.vitor.course.domain.Module;
 import com.vitor.course.request.ModulePostRequest;
+import com.vitor.course.request.ModulePutRequest;
 import com.vitor.course.response.ModuleGetResponse;
 import com.vitor.course.response.ModulePostResponse;
 import org.mapstruct.Mapper;
@@ -20,4 +21,6 @@ public interface ModuleMapper {
     List<ModuleGetResponse> toModuleGetResponse(List<Module> module);
 
     ModuleGetResponse toModuleGetResponse(Module module);
+
+    Module toModule(ModulePutRequest request);
 }

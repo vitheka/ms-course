@@ -2,6 +2,7 @@ package com.vitor.course.controller;
 
 import com.vitor.course.mapper.ModuleMapper;
 import com.vitor.course.request.ModulePostRequest;
+import com.vitor.course.request.ModulePutRequest;
 import com.vitor.course.response.ModuleGetResponse;
 import com.vitor.course.response.ModulePostResponse;
 import com.vitor.course.service.CourseService;
@@ -21,6 +22,7 @@ import java.util.UUID;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
 @Log4j2
+@RequestMapping("/v1/courses")
 public class ModuleController {
 
     private final ModuleService moduleService;
@@ -28,7 +30,7 @@ public class ModuleController {
     private final ModuleMapper mapper;
     private final ParseToJson json;
 
-    @PostMapping("/v1/courses/{courseId}/modules")
+    @PostMapping("/{courseId}/modules")
     public ResponseEntity<ModulePostResponse> saveModule(@PathVariable UUID courseId,
                                                          @RequestBody @Valid ModulePostRequest request) {
 
@@ -47,7 +49,7 @@ public class ModuleController {
 
     }
 
-    @DeleteMapping("/v1/courses/{courseId}/modules/{moduleId}")
+    @DeleteMapping("/{courseId}/modules/{moduleId}")
     public ResponseEntity<Void> deleteModule(@PathVariable UUID courseId,
                                              @PathVariable UUID moduleId) {
 
@@ -59,7 +61,20 @@ public class ModuleController {
 
     }
 
-    @GetMapping("/courses/{courseId}/modules")
+    @PutMapping("/{courseId}/modules/{moduleId}")
+    public ResponseEntity<Void> updateModule(@PathVariable UUID courseId,
+                                             @PathVariable UUID moduleId,
+                                             @RequestBody @Valid ModulePutRequest request) {
+
+        var toModule = mapper.toModule(request);
+
+        moduleService.update(courseId, moduleId, toModule);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
+    @GetMapping("/{courseId}/modules")
     public ResponseEntity<List<ModuleGetResponse>> getAllModules(@PathVariable UUID courseId) {
 
         var module = moduleService.findAllByCourse(courseId);
@@ -70,7 +85,7 @@ public class ModuleController {
 
     }
 
-    @GetMapping("/courses/{courseId}/modules/{moduleId}")
+    @GetMapping("/{courseId}/modules/{moduleId}")
     public ResponseEntity<ModuleGetResponse> getOneModule(@PathVariable UUID courseId,
                                                           @PathVariable UUID moduleId) {
 

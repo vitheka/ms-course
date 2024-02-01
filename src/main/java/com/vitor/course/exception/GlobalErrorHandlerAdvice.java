@@ -2,6 +2,7 @@ package com.vitor.course.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +29,13 @@ public class GlobalErrorHandlerAdvice {
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public ResponseEntity<DefaultErrorMessage> handleSQLIntegrityConstraintViolationException() {
         var errorResponse = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), "Integrity exception, one of the fields should be unique");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<DefaultErrorMessage> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        var errorResponse = new DefaultErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }

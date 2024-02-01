@@ -3,7 +3,6 @@ package com.vitor.course.service;
 import com.vitor.course.domain.Module;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface ModuleService {
@@ -15,4 +14,9 @@ public interface ModuleService {
     Module findModuleIntoCourse(UUID courseId, UUID moduleId);
 
     List<Module> findAllByCourse(UUID courseId);
+
+
+    void update(UUID courseId, UUID moduleId, Module request);
+
+    Module findById(UUID moduleId);
 }

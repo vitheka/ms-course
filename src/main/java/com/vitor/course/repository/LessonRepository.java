@@ -1,7 +1,6 @@
 package com.vitor.course.repository;
 
 import com.vitor.course.domain.Lesson;
-import com.vitor.course.domain.Module;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +14,5 @@ public interface LessonRepository extends JpaRepository<Lesson, UUID> {
 
     @Query("SELECT lesson FROM Lesson lesson WHERE lesson.module.moduleId = :moduleId")
     List<Lesson> findAllLessonIntoModule(@Param("moduleId") UUID moduleId);
+
 }

@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 
@@ -51,5 +50,20 @@ public class ModuleServiceImpl implements ModuleService {
         return moduleRepository.findAllModulesIntoCourse(courseId);
     }
 
+    @Override
+    public void update(UUID courseId, UUID moduleId, Module request) {
+
+        var moduleToUpdate = findModuleIntoCourse(courseId, moduleId);
+
+        moduleToUpdate.setTitle(request.getTitle());
+        moduleToUpdate.setDescription(request.getDescription());
+
+        moduleRepository.save(moduleToUpdate);
+    }
+
+    @Override
+    public Module findById(UUID moduleId) {
+        return moduleRepository.findById(moduleId).orElseThrow( () -> new NotFoundException("Module not found!"));
+    }
 
 }
