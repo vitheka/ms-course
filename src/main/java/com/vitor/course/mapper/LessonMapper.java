@@ -2,6 +2,7 @@ package com.vitor.course.mapper;
 
 import com.vitor.course.domain.Lesson;
 import com.vitor.course.request.LessonPostRequest;
+import com.vitor.course.request.LessonPutRequest;
 import com.vitor.course.response.LessonGetResponse;
 import com.vitor.course.response.LessonPostResponse;
 import org.mapstruct.Mapper;
@@ -18,4 +19,8 @@ public interface LessonMapper {
     LessonPostResponse toLessonPostResponse(Lesson lessonSaved);
 
     List<LessonGetResponse> toLessonGetResponse(List<Lesson> lessons);
+
+    LessonGetResponse toLessonGetResponse(Lesson lessons);
+
+    Lesson toLesson(LessonPutRequest request);
 }

@@ -33,6 +33,7 @@ public class ModuleServiceImpl implements ModuleService {
         moduleRepository.delete(module);
     }
 
+    @Transactional
     @Override
     public Module save(Module module) {
         module.setCreationDate(LocalDateTime.now());

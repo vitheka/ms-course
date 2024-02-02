@@ -2,6 +2,7 @@ package com.vitor.course.controller;
 
 import com.vitor.course.mapper.LessonMapper;
 import com.vitor.course.request.LessonPostRequest;
+import com.vitor.course.request.LessonPutRequest;
 import com.vitor.course.response.LessonGetResponse;
 import com.vitor.course.response.LessonPostResponse;
 import com.vitor.course.service.LessonService;
@@ -43,6 +44,29 @@ public class LessonController {
 
     }
 
+    @DeleteMapping("/{moduleId}/lessons/{lessonId}")
+    public ResponseEntity<Void> deleteLesson(@PathVariable UUID moduleId,
+                                             @PathVariable UUID lessonId) {
+
+        var lessonToBeDeleted = lessonService.findLessonIntoModule(moduleId, lessonId);
+
+        lessonService.delete(lessonToBeDeleted);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{moduleId}/lessons/{lessonId}")
+    public ResponseEntity<Void> updateLesson(@PathVariable UUID moduleId,
+                                             @PathVariable UUID lessonId,
+                                             @RequestBody LessonPutRequest request) {
+
+        var lesson = mapper.toLesson(request);
+
+        lessonService.update(moduleId, lessonId, lesson);
+
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/{moduleId}/lessons")
     public ResponseEntity<List<LessonGetResponse>> getAllLessons(@PathVariable UUID moduleId) {
 
@@ -53,4 +77,16 @@ public class LessonController {
         return ResponseEntity.ok().body(response);
 
     }
+
+    @GetMapping("/{moduleId}/lessons/{lessonId}")
+    public ResponseEntity<LessonGetResponse> getOneLesson(@PathVariable UUID moduleId,
+                                                          @PathVariable UUID lessonId) {
+
+        var lessons = lessonService.findLessonIntoModule(moduleId, lessonId);
+
+        var response = mapper.toLessonGetResponse(lessons);
+
+        return ResponseEntity.ok().body(response);
+    }
+
 }
