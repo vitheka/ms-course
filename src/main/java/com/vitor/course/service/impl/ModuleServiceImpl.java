@@ -65,6 +65,7 @@ public class ModuleServiceImpl implements ModuleService {
     @Override
     public Module findById(UUID moduleId) {
         return moduleRepository.findById(moduleId).orElseThrow( () -> new NotFoundException("Module not found!"));
+
     }
 
 }

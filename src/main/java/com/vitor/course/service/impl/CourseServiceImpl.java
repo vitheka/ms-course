@@ -43,13 +43,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findAll() {
-        return courseRepository.findAll();
+    public List<Course> findAll(UUID userId) {
+        return userId != null ? courseRepository.findAll(userId) : courseRepository.findAll();
     }
 
     @Override
     public Course findById(UUID id) {
-        return courseRepository.findById(id).orElseThrow(() -> new NotFoundException("Course not found!"));
+        return  courseRepository.findById(id).orElseThrow(() -> new NotFoundException("Course not found!"));
     }
 
     @Transactional

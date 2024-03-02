@@ -3,14 +3,14 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.0.33
-    container_name: authuser_mysql
+    container_name: course_mysql
     environment:
       MYSQL_ROOT_PASSWORD: example
-      MYSQL_PASSWORD: ${REGULAR_PASSWORD}
+      MYSQL_PASSWORD: 1234
     ports:
-      - "3310:3306"
+      - "3311:3306"
     volumes:
-      - authuser-db:/var/lib/mysql
+      - course-db:/var/lib/mysql
 
 volumes:
-  authuser-db:
+  course-db:

@@ -15,5 +15,5 @@ public interface CourseService {
 
     void update(Course course);
 
-    List<Course> findAll();
+    List<Course> findAll(UUID userId);
 }

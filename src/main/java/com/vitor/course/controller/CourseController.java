@@ -62,9 +62,9 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseGetResponse>> getAllCourses() {
+    public ResponseEntity<List<CourseGetResponse>> getAllCourses(@RequestParam(required = false) UUID userId) {
 
-        var courses = courseService.findAll();
+        var courses = courseService.findAll(userId);
 
         var response = mapper.toCoursesGetResponse(courses);
 
